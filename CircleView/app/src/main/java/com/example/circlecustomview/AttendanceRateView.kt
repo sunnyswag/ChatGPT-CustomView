@@ -17,7 +17,20 @@ class AttendanceRateView(context: Context, attrs: AttributeSet? = null) :
     private var percentage: Float = 0f
     private val text = "出勤率"
 
+    private val percentageTextColor: Int
+    private val attendanceTextColor: Int
+    private val circleBackgroundColor: Int
+    private val circleProgressColor: Int
+
+
     init {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttendanceRateView)
+        percentageTextColor = typedArray.getColor(R.styleable.AttendanceRateView_percentageTextColor, Color.BLACK)
+        attendanceTextColor = typedArray.getColor(R.styleable.AttendanceRateView_attendanceTextColor, Color.BLACK)
+        circleBackgroundColor = typedArray.getColor(R.styleable.AttendanceRateView_circleBackgroundColor, resources.getColor(R.color.circle_view_background_color))
+        circleProgressColor = typedArray.getColor(R.styleable.AttendanceRateView_circleProgressColor, resources.getColor(R.color.circle_view_progress_color))
+        typedArray.recycle()
+
         paint.isAntiAlias = true
     }
 
@@ -34,21 +47,21 @@ class AttendanceRateView(context: Context, attrs: AttributeSet? = null) :
         val padding = 20
 
         // Draw the light blue background circle
-        paint.color = Color.parseColor("#66BBF0")
+        paint.color = circleBackgroundColor
         paint.strokeWidth = strokeWidth.toFloat()
         paint.style = Paint.Style.STROKE
         rectF.set(padding.toFloat(), padding.toFloat(), (width - padding).toFloat(), (height - padding).toFloat())
         canvas.drawOval(rectF, paint)
 
         // Draw the dark blue progress arc
-        paint.color = Color.parseColor("#2F4F8B")
+        paint.color = circleProgressColor
         paint.setShadowLayer(10f, 0f, 0f, Color.BLACK)
         canvas.drawArc(rectF, -90f, percentage * 3.6f, false, paint)
         paint.clearShadowLayer()
 
         // Draw the percentage text
         paint.textSize = width / 3f
-        paint.color = Color.BLACK
+        paint.color = percentageTextColor
         paint.typeface = Typeface.DEFAULT_BOLD
         paint.style = Paint.Style.FILL
         val percentageText = String.format("%.1f%%", percentage)
@@ -57,6 +70,7 @@ class AttendanceRateView(context: Context, attrs: AttributeSet? = null) :
 
         // Draw the "出勤率" text
         paint.textSize = width / 7f
+        paint.color = attendanceTextColor
         val textWidth = paint.measureText(text)
         canvas.drawText(text, (width - textWidth) / 2, height * 3 / 4f, paint)
     }
