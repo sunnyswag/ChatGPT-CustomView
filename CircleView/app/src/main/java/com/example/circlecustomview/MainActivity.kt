@@ -12,7 +12,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        binding.attendanceRateView.setPercentage(15.0f)
+        binding.btResetProgress.setOnClickListener {
+            binding.attendanceRateView.setPercentage(0)
+        }
+
+        binding.btChangeProgress.setOnClickListener {
+            binding.attendanceRateView.animatePercentage(60)
+        }
 
         setContentView(binding.root)
     }

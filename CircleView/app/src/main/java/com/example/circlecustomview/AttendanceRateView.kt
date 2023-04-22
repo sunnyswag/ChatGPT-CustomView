@@ -1,5 +1,6 @@
 package com.example.circlecustomview
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -14,14 +15,13 @@ class AttendanceRateView(context: Context, attrs: AttributeSet? = null) :
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val rectF = RectF()
-    private var percentage: Float = 0f
-    private val text = "出勤率"
+    private var percentage: Int = 0
+    private val text = context.getString(R.string.circle_view_attendance)
 
     private val percentageTextColor: Int
     private val attendanceTextColor: Int
     private val circleBackgroundColor: Int
     private val circleProgressColor: Int
-
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttendanceRateView)
@@ -34,17 +34,27 @@ class AttendanceRateView(context: Context, attrs: AttributeSet? = null) :
         paint.isAntiAlias = true
     }
 
-    fun setPercentage(percentage: Float) {
-        this.percentage = percentage
+    fun setPercentage(targetPercentage: Int) {
+        this.percentage = targetPercentage
         invalidate()
+    }
+
+    fun animatePercentage(targetPercentage: Int, duration: Long = 1000) {
+        val animator = ValueAnimator.ofInt(percentage, targetPercentage)
+        animator.duration = duration
+        animator.addUpdateListener { animation ->
+            percentage = animation.animatedValue as Int
+            invalidate()
+        }
+        animator.start()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val width = width
         val height = height
-        val strokeWidth = 30
-        val padding = 20
+        val strokeWidth = 20
+        val padding = 60
 
         // Draw the light blue background circle
         paint.color = circleBackgroundColor
@@ -55,23 +65,26 @@ class AttendanceRateView(context: Context, attrs: AttributeSet? = null) :
 
         // Draw the dark blue progress arc
         paint.color = circleProgressColor
-        paint.setShadowLayer(10f, 0f, 0f, Color.BLACK)
+        paint.strokeWidth = strokeWidth.toFloat() * 3
+        paint.strokeCap = Paint.Cap.ROUND // 设置笔尖样式为圆角
+        val shadowColor = Color.argb(90, 49, 119, 248) // #503177F8
+        paint.setShadowLayer(15f, 0f, 0f, shadowColor)
         canvas.drawArc(rectF, -90f, percentage * 3.6f, false, paint)
         paint.clearShadowLayer()
 
         // Draw the percentage text
-        paint.textSize = width / 3f
+        paint.textSize = width / 6f
         paint.color = percentageTextColor
-        paint.typeface = Typeface.DEFAULT_BOLD
+        paint.typeface = Typeface.DEFAULT
         paint.style = Paint.Style.FILL
-        val percentageText = String.format("%.1f%%", percentage)
+        val percentageText = String.format(context.getString(R.string.circle_view_percentage), percentage)
         val percentageTextWidth = paint.measureText(percentageText)
         canvas.drawText(percentageText, (width - percentageTextWidth) / 2, height / 2f, paint)
 
         // Draw the "出勤率" text
-        paint.textSize = width / 7f
+        paint.textSize = width / 13f
         paint.color = attendanceTextColor
         val textWidth = paint.measureText(text)
-        canvas.drawText(text, (width - textWidth) / 2, height * 3 / 4f, paint)
+        canvas.drawText(text, (width - textWidth) / 2, height / 2f + width / 7f, paint)
     }
 }
