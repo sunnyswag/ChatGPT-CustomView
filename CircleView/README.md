@@ -12,7 +12,7 @@
 
 作者写的自定义 View ，效果是这样的：
 
-<img src="https://tern-1257001564.cos.ap-guangzhou.myqcloud.com/markdown_pic/eae1eca72fc1416784b2e7c42ee6638c~tplv-k3u1fbpfcp-zoom-crop-mark:2268:2268:2268:1277.awebp" alt="Android自定义View的绘制，往往都是从圆环开始" style="zoom: 25%;" />
+<img src="https://tern-1257001564.cos.ap-guangzhou.myqcloud.com/markdown_pic/original_display.webp" alt="original_display" style="zoom: 25%;" />
 
 说实话，看起来有一点点复杂。不过以我这几个月和 ChatGPT 的相处，我对它的实力还是有信心的。写个自定义 View 应该不成问题。不过我也很好奇结果会是咋样，毕竟没有试过。那就废话不多说，直接开始！
 
