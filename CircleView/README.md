@@ -84,7 +84,7 @@
 
 GPT-4 写自定义 View，完全是没问题的。GPT-3.5 我不知道，没有尝试过，感兴趣的朋友也可以试试。
 
-要是在几个月之后，GPT-4 开放了图片上传的接口，那可以预见的是，可以时间 Figma 设计稿 -> UI Code Any Platform。
+要是在几个月之后，GPT-4 开放了图片上传的接口，那可以预见的是，可以实现 Figma 设计稿 -> UI Code Any Platform。
 
 人类会被 GPT 淘汰吗？我感觉不学习的人会被淘汰。
 
@@ -94,8 +94,10 @@ GPT-4 写自定义 View，完全是没问题的。GPT-3.5 我不知道，没有�
 
 
 
-## REFERENCE
+## Related Links
 
 [和 ChatGPT的对话详情(后面一部分的代码在导出为图片时被吃掉了)](https://github.com/sunnyswag/ChatGPT-CustomView/blob/main/assets/custom_view_chat.png)
+
+[Github Source Code](https://github.com/sunnyswag/ChatGPT-CustomView/tree/main/CircleView)
 
 [Android自定义View的绘制，往往都是从圆环开始](https://juejin.cn/post/7164593975255531557#comment)
